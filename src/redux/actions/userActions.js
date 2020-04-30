@@ -6,12 +6,11 @@ export const LOGIN_START = "LOGIN_START";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const login = credentials => dispatch => {
+  console.log(credentials)
   dispatch({ type: LOGIN_START });
-  console.log("I am credentials", credentials)
   return axios
     .post("https://calm-reaches-19822.herokuapp.com/api/login/", credentials)
     .then(res => {
-      console.log(res.data)
       localStorage.setItem("Token", res.data.key);
       
       dispatch({ type: LOGIN_SUCCESS, payload: res.data });
@@ -47,7 +46,6 @@ export const initiate = () => dispatch => {
  return axiosWithAuth()
     .get("/api/adv/init/")
     .then(res => {
-      console.log("I am res", res)
       dispatch({ type: INITIATE_SUCCESS, payload: res });
     })
     .catch(err => {
@@ -62,9 +60,8 @@ export const MOVE_FAILURE = "MOVE_FAILURE";
 export const move = (direction) => dispatch => {
   dispatch({ type: MOVE_START });
  return axiosWithAuth()
-    .get("/api/adv/move/",direction)
+    .post("/api/adv/move/",direction)
     .then(res => {
-      console.log("I am res", res)
       dispatch({ type: MOVE_SUCCESS, payload: res });
     })
     .catch(err => {

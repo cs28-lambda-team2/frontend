@@ -21,8 +21,8 @@ const initialState = {
   success:false,
   navButton:"",
   gameOn:localStorage.getItem("gameOn")?true:false,
-  track:false
-  ,
+  track:false,
+  moving:false,
   data:""
 };
 
@@ -35,7 +35,6 @@ export const useReducer = (state = initialState, action) => {
         error: null,
       };
     case LOGIN_SUCCESS:
-      console.log("from reducer", action.payload);
       return {
         ...state,
         loading: false,
@@ -97,14 +96,13 @@ export const useReducer = (state = initialState, action) => {
         error: null,
       };
     case MOVE_SUCCESS:
-      localStorage.setItem("gameOn", true);
 
       return {
         ...state,
         loading: false,
         gameOn:true,
         data: action.payload.data,
-        track:true
+        moving:true
       };
     case MOVE_FAILURE:
       return {

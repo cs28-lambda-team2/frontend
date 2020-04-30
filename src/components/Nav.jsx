@@ -4,6 +4,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+
 import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -27,7 +28,7 @@ export const NavBar = (props) => {
     if (localStorage.getItem("Token")) {
       setValue("LOGOUT");
     }
-  });
+  },[]);
   const buttonAction = (e) => {
     e.preventDefault();
     if(value==="LOGOUT"){
@@ -37,7 +38,6 @@ export const NavBar = (props) => {
 
     }
   };
-  console.log("I am props from nav", props.navButton);
   return (
     <div className={classes.root}>
       <AppBar position="fixed">

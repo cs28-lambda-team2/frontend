@@ -13,6 +13,7 @@ import north from "../images/north.png";
 import south from "../images/south.png";
 import east from "../images/east.png";
 import west from "../images/west.png";
+import Loader from "react-loader-spinner";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,12 +47,18 @@ const useStyles = makeStyles((theme) => ({
     margin: "5px",
     //   border:"10px solid red"
   },
+  loading: {
+    height: "40px",
+    width:"40px",
+    textAlign: "center",
+
+  },
 }));
 export const GamePage = (props) => {
   const classes = useStyles();
   const [dataInit, setDataInit] = useState("");
-  console.log("THIS GAMEON", props.gameOn);
   const [disable, setDisable] = useState(false);
+
   useEffect(() => {
     if (props.gameOn === true) {
       props.initiate();
@@ -59,14 +66,17 @@ export const GamePage = (props) => {
       setDisable(true);
     }
   }, [props.track]);
+
+  useEffect(() => {
+    setDataInit(props.data);
+  }, [props.data]);
   const initiate = (e) => {
     e.preventDefault();
-
     props.initiate();
   };
-  const move = (direction) => {
-    console.log("I am direction", direction)
-    props.move(direction);
+  const move = (direct) => {
+    props.move({ direction: direct });
+    setDataInit(props.data);
   };
   return (
     <React.Fragment>
@@ -77,7 +87,6 @@ export const GamePage = (props) => {
             Map
           </Grid>
           <Grid item xs={12} sm={4} md={4}>
-            <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={12}>
                 <Button
                   fullWidth
@@ -90,6 +99,8 @@ export const GamePage = (props) => {
                   INITIATE
                 </Button>
               </Grid>
+              
+              
               <Grid item xs={12} sm={12} md={12}>
                 <Typography variant="h6">PLAYER</Typography>
                 <TextField
@@ -97,7 +108,6 @@ export const GamePage = (props) => {
                   type="text"
                   name="player"
                   fullWidth
-                  defaultValue={dataInit.name}
                   value={dataInit.name}
                   variant="outlined"
                   InputProps={{
@@ -107,13 +117,14 @@ export const GamePage = (props) => {
               </Grid>
 
               <Paper className={classes.initiate}>
-                <Grid item xs={12} sm={12} md={12}>
+                <Grid item xs={6} sm={6} md={6}>
                   <Typography variant="h6" className={classes.test}>
                     POSITION
                   </Typography>
                 </Grid>
+
                 <Grid item xs={12} sm={12} md={12}>
-                  <Typography variant="p">{dataInit.title}</Typography>
+                  <Typography variant="caption">{dataInit.title}</Typography>
                 </Grid>
                 <Grid item xs={12} sm={12} md={12}>
                   <Typography variant="h6" className={classes.test}>
@@ -121,7 +132,7 @@ export const GamePage = (props) => {
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={12} md={12}>
-                  <Typography variant="p">{dataInit.description}</Typography>
+                  <Typography variant="caption">{dataInit.description}</Typography>
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={12}>
@@ -141,48 +152,70 @@ export const GamePage = (props) => {
               </Paper>
               <Paper className={classes.control}>
                 <Grid container spacing={0}>
-                  <Grid item xs="6" sm="6" md="6">
+                  <Grid item xs={6}  sm={6} md={6}>
                     <Grid container spacing={0}>
-                      <Grid item xs="4" md="4" className={classes.dir}>
+                      <Grid item xs={4}  sm={4} md={4} className={classes.dir}>
                         <img
                           src={west}
                           alt="west"
-                          className="direction-button" onClick={move("w")}
+                          className="direction-button"
+                          onClick={() => move("w")}
                         />
                       </Grid>
-                      <Grid item xs="4" md="4">
-                        <Grid container spacing={0}>
-                          <Grid item xs="12" md="12">
+                      <Grid item xs={4}  sm={4} md={4}>
+                        <Grid container spacing={1}>
+                          <Grid item xs={12}  sm={12} md={12} >
                             <img
                               src={north}
                               alt="north"
                               className="direction-button"
+                              onClick={() => move("n")} 
                             />{" "}
                           </Grid>
-
-                          <Grid item xs="12" md="12">
+                          <Grid item xs={12} sm={12} md={12}>  
+              <div className={classes.loading}>
+                {props.loading ? <Loader type="Circles" color="#00BFFF" height={40} width={40} /> : ""}
+              </div>
+                </Grid>
+                          <Grid item xs={12}  sm={12} md={12}>
                             <img
                               src={south}
                               alt="south"
                               className="direction-button"
+                              onClick={() => move("s")}
                             />{" "}
                           </Grid>
                         </Grid>
                       </Grid>
-                      <Grid item xs="4" md="4" className={classes.dir}>
+                      <Grid item xs={4}  sm={4} md={4} className={classes.dir}>
                         <img
                           src={east}
                           alt="east"
                           className="direction-button"
+                          onClick={() => move("e")}
                         />{" "}
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={6}  sm={6} md={6} >
+                    <Grid container spacing={2}>
+                      <Grid item xs={12}  sm={12} md={12}>
+                        <Button variant="outlined" fullWidth color="primary">
+                          PICK TREASURE
+                        </Button>
+                      </Grid>
+                      <Grid item xs={12}  sm={12} md={12}>
+                        <Button variant="outlined" fullWidth color="secondary">
+                          DROP TREASURE
+                        </Button>
                       </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
               </Paper>
-            </Grid>
           </Grid>
         </Grid>
+      
       </Container>
     </React.Fragment>
   );
@@ -191,7 +224,9 @@ function mapStateToProps(state) {
   return {
     data: state.useReducer.data,
     track: state.useReducer.track,
+    moving: state.useReducer.moving,
     gameOn: state.useReducer.gameOn,
+    loading: state.useReducer.loading,
   };
 }
 export default connect(mapStateToProps, { initiate, move })(GamePage);
