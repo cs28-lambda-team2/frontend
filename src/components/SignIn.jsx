@@ -7,7 +7,7 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import {connect} from "react-redux"
 import { makeStyles } from "@material-ui/core/styles";
-import {register} from "../redux/actions"
+import {login} from "../redux/actions"
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -29,21 +29,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const SignUp=(props) =>{
+export const SignIn=(props) =>{
   const classes = useStyles();
   const [values, setValues] = useState({
     username: "",
-    password1: "",
-    password2: "",
+    password: "",
+    
   });
-
+  useEffect(()=>{
+    if (props.success===true){
+      props.history.push('/game')
+    }
+  },[props.history,props.success])
   const handleChanges = (e) => {
     e.preventDefault();
     setValues({ ...values, [e.target.name]: e.target.value });
   };
   const onClickSubmit = (e) => {
     e.preventDefault();
-    props.register(values)
+    props.login(values)
+   
   };
   return (
     <Container component="main" className={classes.container}>
@@ -52,7 +57,7 @@ export const SignUp=(props) =>{
 
       <Paper className={classes.paper} >
         <Typography component="h1" variant="h4">
-          SignUp
+          Login
         </Typography>
        
 <br></br>
@@ -71,7 +76,7 @@ export const SignUp=(props) =>{
                   id="filled-password-input"
                   label="Password"
                   type="password"
-                  name="password1"
+                  name="password"
                   fullWidth
                   onChange={handleChanges}
                   value={values.password}
@@ -80,21 +85,9 @@ export const SignUp=(props) =>{
                   />
            <br>
            </br>
-           <TextField
-                  id="filled-password-input"
-                  label="Confirm Password"
-                  type="password"
-                  name="password2"
-                  fullWidth
-                  onChange={handleChanges}
-                  value={values.password}
-                  autoComplete="current-password"
-                  variant="outlined"
-                  />
-           <br>
-           </br>
+           
                 <Button type="submit" onClick={onClickSubmit} variant="contained" color="primary">
-                  SignUp
+                  Login
                 </Button>
             
             
@@ -105,8 +98,7 @@ export const SignUp=(props) =>{
 }
 function mapStateToProps(state){
   return{
-    success: state.useReducer.success
-
+success: state.useReducer.success
   }
 }
-export default connect(mapStateToProps,{register})(SignUp)
+export default connect(mapStateToProps,{login})(SignIn)

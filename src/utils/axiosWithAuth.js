@@ -1,13 +1,12 @@
 import axios from 'axios';
 
 export const axiosWithAuth = () => {
-  const token = localStorage.getItem('token');
-  const users_id= localStorage.getItem('userID')
+  const Token = localStorage.getItem('Token');
   // return an instance of axios
   return axios.create({
-    baseURL: 'https://airbnb-optimal-price-2.herokuapp.com',
+    baseURL: 'https://calm-reaches-19822.herokuapp.com',
     headers: {
-      Authorization: token, users_id
+      Authorization: Token
     }
   });
 };

@@ -14,7 +14,7 @@ const PrivateRoute = ({ component: Component, render:Render, ...rest }) => {
     <Route
       {...rest}
       render={props => {
-        if (localStorage.getItem('token') && localStorage.getItem('userID')) {
+        if (localStorage.getItem('Token') ) {
           if (Component) return <Component {...props} />;
           if (Render)return Render(props)
         } else {
