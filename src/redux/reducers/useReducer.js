@@ -5,6 +5,12 @@ import {
   REGISTER_START,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
+  INITIATE_START,
+  INITIATE_SUCCESS,
+  INITIATE_FAILURE,
+  MOVE_START,
+  MOVE_SUCCESS,
+  MOVE_FAILURE
  
 } from "../actions";
 
@@ -13,7 +19,11 @@ const initialState = {
   error: null,
   message: "",
   success:false,
-  navButton:""
+  navButton:"",
+  gameOn:localStorage.getItem("gameOn")?true:false,
+  track:false
+  ,
+  data:""
 };
 
 export const useReducer = (state = initialState, action) => {
@@ -57,6 +67,52 @@ export const useReducer = (state = initialState, action) => {
         error: action.payload,
         loading: false,
       };
+      case INITIATE_START:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case INITIATE_SUCCESS:
+      localStorage.setItem("gameOn", true);
+
+      return {
+        ...state,
+        loading: false,
+        gameOn:true,
+        data: action.payload.data,
+        track:true
+      };
+    case INITIATE_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+      case MOVE_START:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case MOVE_SUCCESS:
+      localStorage.setItem("gameOn", true);
+
+      return {
+        ...state,
+        loading: false,
+        gameOn:true,
+        data: action.payload.data,
+        track:true
+      };
+    case MOVE_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
 
     default:
       return state;

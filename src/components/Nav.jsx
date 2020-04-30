@@ -32,6 +32,7 @@ export const NavBar = (props) => {
     e.preventDefault();
     if(value==="LOGOUT"){
       localStorage.removeItem("Token")
+      localStorage.removeItem("gameOn")
       
 
     }
@@ -39,7 +40,7 @@ export const NavBar = (props) => {
   console.log("I am props from nav", props.navButton);
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             Calm Reaches
