@@ -14,6 +14,7 @@ import south from "../images/south.png";
 import east from "../images/east.png";
 import west from "../images/west.png";
 import Loader from "react-loader-spinner";
+import Map from './Game/Map.js'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -84,7 +85,7 @@ export const GamePage = (props) => {
       <Container className={classes.container}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={8} className={classes.map}>
-            Map
+            <Map />
           </Grid>
           <Grid item xs={12} sm={4} md={4}>
               <Grid item xs={12} sm={12} md={12}>
@@ -99,8 +100,8 @@ export const GamePage = (props) => {
                   INITIATE
                 </Button>
               </Grid>
-              
-              
+
+
               <Grid item xs={12} sm={12} md={12}>
                 <Typography variant="h6">PLAYER</Typography>
                 <TextField
@@ -169,10 +170,10 @@ export const GamePage = (props) => {
                               src={north}
                               alt="north"
                               className="direction-button"
-                              onClick={() => move("n")} 
+                              onClick={() => move("n")}
                             />{" "}
                           </Grid>
-                          <Grid item xs={12} sm={12} md={12}>  
+                          <Grid item xs={12} sm={12} md={12}>
               <div className={classes.loading}>
                 {props.loading ? <Loader type="Circles" color="#00BFFF" height={40} width={40} /> : ""}
               </div>
@@ -215,7 +216,7 @@ export const GamePage = (props) => {
               </Paper>
           </Grid>
         </Grid>
-      
+
       </Container>
     </React.Fragment>
   );
