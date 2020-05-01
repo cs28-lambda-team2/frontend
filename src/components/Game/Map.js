@@ -1,17 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import [drawMap, mapSize, roomSize]
+import {drawMap} from "./game_helpers"
 
 
-const Map = () => {
+const Map = (props) => {
   const [mapData, setMapData] = useState(null);
   const room_size = 100;
   const canvas = useRef(null);
 
-  const drawMap = () => {
-
-  }
-
+ console.log("I am props",props)
   useEffect(()=> {
     axios.get("https://calm-reaches-19822.herokuapp.com/api/adv/map").then(res => {
       setMapData(Object.values(res.data));
@@ -23,7 +20,8 @@ const Map = () => {
     return <p> Loading map data </p>;
 
   console.log(mapData);
-  return <></>;
+  // return <></>
+  return drawMap(canvas,mapData,props.currentPosition);
 }
 
 export default Map
