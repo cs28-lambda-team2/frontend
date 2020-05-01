@@ -14,6 +14,7 @@ function App() {
         <Route path="/register"  render={(props) => <SignUp {...props} />} />
         <Route path="/login" render={(props) => <SignIn {...props} />} />
         <PrivateRoute exact path="/game" render ={(props) => <GamePage {...props}/>}/>
+        <h1 className="landing_view"> Login in order to play!</h1>
       </Switch>
     </div>
   );
