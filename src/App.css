@@ -1,3 +1,17 @@
 .App {
   text-align: center;
+
+}
+.pap{
+  width: 500px;
+  margin: 0 auto;
+  height: 400px;
+}
+
+@media only screen and (max-width: 400px) {
+  .pap{
+    width: 250px;
+    margin: 0 auto;
+    height: 400px;
+  }
 }
