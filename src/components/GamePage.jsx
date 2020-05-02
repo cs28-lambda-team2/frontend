@@ -36,7 +36,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   map: {
-    // border: "10px solid green",
+    border: "5px solid green",
+    width:"500px",
+    height:"500px"
   },
   test: {
     textAlign: "left",
@@ -85,7 +87,7 @@ export const GamePage = (props) => {
       <Container className={classes.container}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={8} className={classes.map}>
-            <Map  currentPosition={dataInit.title}/>
+            <Map  current_room={dataInit.current_room}/>
           </Grid>
           <Grid item xs={12} sm={4} md={4}>
               <Grid item xs={12} sm={12} md={12}>
