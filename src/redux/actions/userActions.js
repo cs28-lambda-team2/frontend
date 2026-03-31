@@ -6,7 +6,6 @@ export const LOGIN_START = "LOGIN_START";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const login = credentials => dispatch => {
-  console.log(credentials)
   dispatch({ type: LOGIN_START });
   return axios
     .post("https://calm-reaches-19822.herokuapp.com/api/login/", credentials)
